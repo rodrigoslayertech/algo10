@@ -133,4 +133,4 @@ for entry in "${LANGUAGES[@]}"; do
     done
 done
 
-echo -e "${GREEN}All tests completed!${NC}"
+echo -e "${BLUE}All tests completed!${NC}"

@@ -94,5 +94,23 @@ Feel free to add other runtimes.
 ## Running Tests
 
 ```bash
-bash run.sh
+bash run.sh [options] [args]
 ```
+
+### Options
+
+- `--iterations <number>`: Sets the number of iterations for the benchmarks (default: 10000).
+- `--language <language>`: Filters the tests for a specific language.
+
+### Args
+
+- `<algorithm_name>`: Name of the algorithm to be executed.
+- `<algorithm_index>`: Index of the algorithm in the list to be executed.
+
+### Output example
+
+```bash
+bash run.sh --iterations 1000
+```
+
+![Example Output](output.png)
