@@ -9,7 +9,7 @@ typedef struct {
     int count;
 } SplitResult;
 
-void* split_string(va_list args) {
+void* split_string_by_character(va_list args) {
     const char* text = va_arg(args, const char*);
     const char* delimiter = va_arg(args, const char*);
     
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
     // # 2️⃣ Benchmark
     Benchmark b;
     benchmark_init(&b, iterations);
-    benchmark_measure(&b, split_string, text, delimiter);
+    benchmark_measure(&b, split_string_by_character, text, delimiter);
 
     // # 3️⃣ Print results
     benchmark_print(&b);

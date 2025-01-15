@@ -7,8 +7,8 @@ import (
 	"./Benchmark"
 )
 
-// SplitString splits a string by a given delimiter
-func SplitString(text, delimiter string) []string {
+// SplitStringByCharacter splits a string by a given delimiter
+func SplitStringByCharacter(text, delimiter string) []string {
 	return strings.Split(text, delimiter)
 }
 
@@ -25,7 +25,7 @@ func main() {
 
 	// # 2️⃣ Run benchmark
 	Benchmark := Benchmark.NewBenchmark(iterations)
-	Benchmark.Measure(SplitString, text, delimiter)
+	Benchmark.Measure(SplitStringByCharacter, text, delimiter)
 
 	// # 3️⃣ Print results
 	Benchmark.Print()

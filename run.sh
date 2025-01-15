@@ -1,16 +1,20 @@
 #!/bin/bash
 
-# Definir cores
+clear
+
+# Set colors
+BLACK='\033[0;30m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
 WHITE='\033[1;37m'
 GREY='\033[0;37m'
-BLUE='\033[0;34m'
-NC='\033[0m' # Sem cor
+NC='\033[0m' # without color
 
 echo -e "${WHITE}Algo10 - Running algorithms...${NC}\n"
-printf "${GREY}Command: %s${NC}\n\n" "$(basename "$0") $*"
+printf "${GREY}Command: ${BLACK}%s${NC}\n\n" "$(basename "$0") $*"
 
 # !
 # # Languages
@@ -19,8 +23,8 @@ LANGUAGES=(
     "C|gcc|-o|1|gcc --version"
     "CPP|g++|-o|1|g++ --version"
     "Go|go run||0|go version"
-    "Javascript|node||0|node --version"
     "Javascript|bun||0|bun --version"
+    "Javascript|node||0|node --version"
     "PHP|php||0|php --version"
     "Python|python3||0|python3 --version 2>&1"
     "Rust|rustc|--crate-name temp_crate -o|1|rustc --version"
@@ -65,21 +69,21 @@ while [[ $# -gt 0 ]]; do
 done
 # # Arguments
 # iterations
-printf "${RED}Number of iterations: %s${NC}\n" "$iterations"
+printf "${RED}Number of iterations: ${PURPLE}%s${NC}\n" "$iterations"
 # algo_arg
 if [[ $algo_arg =~ ^[0-9]+$ ]]; then
   algo_index=$algo_arg
   algo_name="${algo_list[$((algo_index-1))]}"
 
-  printf "${RED}Running algo with index: %s${NC}\n" "$algo_index"
+  printf "${RED}Running algo with index: ${PURPLE}%s${NC}\n" "$algo_index"
 elif [[ -n "$algo_arg" ]]; then
   algo_name="$algo_arg"
 
-  printf "${RED}Running algo with name: '%s'${NC}\n" "$algo_name"
+  printf "${RED}Running algo with name: ${PURPLE}'%s'${NC}\n" "$algo_name"
 fi
 # language_filter
 if [[ -n "$language_filter" ]]; then
-  printf "${RED}Filtering by language: '%s'${NC}\n" "$language_filter"
+  printf "${RED}Filtering by language: ${PURPLE}'%s'${NC}\n" "$language_filter"
 fi
 
 echo -e "\n${BLUE}Starting tests...${NC}\n"
@@ -107,17 +111,21 @@ for entry in "${LANGUAGES[@]}"; do
         variation="${variation%%.*}"
 
         # Filter algorithms
-        if [[ -n "$algo_name" && "$name" != "$algo_name" ]]; then
+        if [[ -n "$algo_name" && "$name" != "${algo_name%%.algo*}" ]]; then
             continue
         fi
 
-        printf "${GREEN}%s (algo%s)${NC} " "$name" "$variation"
+        if [[ -n "$algo_name" && "$algo_name" == *".algo"* && "$variation" != "${algo_name##*.algo}" ]]; then
+            continue
+        fi
+
+        printf "${GREEN}%s${NC}${BLACK}.algo%s${NC} " "$name" "$variation"
 
         if [ "$IS_COMPILED" = "1" ]; then
             # Compile
             binary="/tmp/${name//[^a-zA-Z0-9_]/_}"
             # shellcheck disable=SC2086
-            $CMD $file $ARGS "$binary"
+            OUTPUT=$($CMD $file $ARGS "$binary")
             # Run binary if compiled
             if [ -f "$binary" ]; then
                 $binary "$iterations"
@@ -126,8 +134,14 @@ for entry in "${LANGUAGES[@]}"; do
             rm -f "$binary"
         else
             # shellcheck disable=SC2086
-            $CMD $ARGS "$file" "$iterations"
+            OUTPUT=$($CMD $ARGS "$file" "$iterations")
         fi
+
+        # # Output
+        # ?! Remove breakline at the end of the output
+        OUTPUT="${OUTPUT//[$'\t\r\n']}"
+        # @ Print output
+        echo -e "$OUTPUT"
 
         echo -e "${YELLOW}------------------------${NC}\n"
     done

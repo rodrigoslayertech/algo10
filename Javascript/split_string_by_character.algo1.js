@@ -5,7 +5,7 @@ const Benchmark = require('./Benchmark');
  * Complexity: O(n)
  * Description: Basic string splitting implementation using split()
  */
-function split_string(text, delimiter) {
+function split_string_by_character(text, delimiter) {
     return text.split(delimiter);
 }
 
@@ -18,7 +18,7 @@ const iterations = process.argv[2] ? parseInt(process.argv[2]) : 10000;
 
 // # 2️⃣ Run benchmark
 const benchmark = new Benchmark(iterations);
-benchmark.measure(split_string, [text, delimiter]);
+benchmark.measure(split_string_by_character, [text, delimiter]);
 
 // # 3️⃣ Print results
 benchmark.print();

@@ -1,6 +1,8 @@
 # Algo10
 
-Algorithm studies. Compared in different languages and variations with benchmarks.
+Algorithm studies.
+
+Algo10 is a great repo to find that algorithm, compare its variations and compare performance with other languages.
 
 ## Algorithms
 
@@ -9,7 +11,7 @@ Algorithm studies. Compared in different languages and variations with benchmark
 
 ## Project Structure
 
-Below is an example of how algorithms are structured in directories and folders.
+Below is an example of how algorithms are structured in directories and files.
 
 ```txt
 algo10/
@@ -21,7 +23,6 @@ algo10/
 │   └── ...Other algorithms or variations of the same algorithm here...
 ├── CPP/
 │   ├── Benchmark.h
-│   ├── Benchmark.cpp
 │   ├── split_string_by_character.algo1.cpp
 │   ├── split_string_by_character.algo2.cpp
 │   └── ...Other algorithms or variations of the same algorithm here...
@@ -53,13 +54,15 @@ algo10/
 
 ## Rules
 
-1. Language names like folders in the root folder start with a capital letter
-2. Algorithm names MUST be identical across all languages (e.g., 'split_string_by_character' should be used consistently, not 'explode_string' in one language and 'split_string_by_character' in another)
+1. Language names like folders in the root folder start with a capital letter.
+2. Algorithm names MUST be identical across all languages.
 3. Each algorithm can have multiple implementations (variations)
-4. Variations of algorithms written in the same language are identified with the suffix `.algo` + `n`, where `n` is the number of the algorithm variation: algo1, algo2, etc. There can only be up to 10 variations of the same algorithm.
-5. Each language must have its own Benchmark module.
-6. The Benchmark module file name for each language must start with an uppercase letter: `Benchmark`.
-7. All implementations MUST include benchmarks for performance comparison
+4. Variations of algorithms are identified with the suffix `.algo` + `n` in file name, where `n` is the number of the algorithm variation.
+5. Each language MUST have its own Benchmark module.
+6. The Benchmark module file name for each language MUST start with an uppercase letter: `Benchmark`.
+7. All implementations MUST include benchmarks for performance comparison.
+8. Benchmark modules MUST implement loops for iterations.
+9. Algorithms can have a maximum of 10 variations.
 
 ### File Naming Convention
 
@@ -70,7 +73,7 @@ algo10/
 
 ## Scope
 
-### Programming Languages
+### Supported Languages
 
 - C
 - CPP
@@ -82,35 +85,41 @@ algo10/
 
 Feel free to add other languages.
 
-### Runtimes
+### Supported Runtimes
 
 #### Javascript
 
-- NodeJS
 - Bun
+- NodeJS
 
 Feel free to add other runtimes.
 
 ## Running Tests
 
 ```bash
-bash run.sh [options] [args]
+bash run.sh [args] [options]
 ```
+
+### Args
+
+- `<algorithm_name>`: Name of the algorithm to be executed.
+- `<algorithm_index>`: Index of the algorithm in the list to be executed.
+- `<algorithm_name>.algo<variation_number>`: Name of the algorithm with specific variation to be executed.
 
 ### Options
 
 - `--iterations <number>`: Sets the number of iterations for the benchmarks (default: 10000).
 - `--language <language>`: Filters the tests for a specific language.
 
-### Args
-
-- `<algorithm_name>`: Name of the algorithm to be executed.
-- `<algorithm_index>`: Index of the algorithm in the list to be executed.
-
 ### Output example
 
 ```bash
 bash run.sh --iterations 1000
+# bash run.sh 1 --iterations 10000
+# bash run.sh split_string_by_character --iterations 10000
+# bash run.sh split_string_by_character.algo1 --iterations 10000
+# bash run.sh --language PHP
+# ...
 ```
 
 ![Example Output](output.png)
